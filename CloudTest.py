@@ -3,7 +3,7 @@ import smtplib, os
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-# Initialize some variables
+# Read enviroment variables (protects your password. Look in the README.md file for more info)
 EMAIL_ME = os.getenv("EMAIL_ME")
 EMAIL_YOU = os.getenv("EMAIL_YOU")
 EMAIL_PWD = os.getenv("EMAIL_PWD")
