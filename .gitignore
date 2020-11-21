@@ -1,5 +1,5 @@
 # VS Code settings
-.vscode
+.vscode/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -106,7 +106,7 @@ celerybeat.pid
 
 # Environments
 .env
-.venv
+.venv/
 env/
 venv/
 ENV/
@@ -130,3 +130,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+.python_packages
