@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Cloud Function - AWS
+
+Globals:
+  Function:
+    Timeout: 15
+
+Resources:
+  CloudFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: cloud_function/
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Events:
+        CloudFunction:
+          Type: Api
+          Properties:
+            Path: /cloudtest
+            Method: get
+
+Outputs:
+  CloudFunctionApi:
+    Description: "API Gateway endpoint URL for Prod stage for Cloud Function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/cloudtest/"
+  CloudFunction:
+    Description: "Cloud Function Lambda Function ARN"
+    Value: !GetAtt CloudFunction.Arn
+  CloudFunctionIamRole:
+    Description: "Implicit IAM Role created for Cloud Function"
+    Value: !GetAtt CloudFunctionRole.Arn

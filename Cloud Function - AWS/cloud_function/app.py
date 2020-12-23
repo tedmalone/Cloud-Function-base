@@ -1,3 +1,4 @@
+import json
 import pandas as pd
 import smtplib, os
 from email.mime.multipart import MIMEMultipart
@@ -5,9 +6,10 @@ from email.mime.text import MIMEText
 
 def cloudtest ():
     # Read enviroment variables (protects your password. Look in the README.md file for more info)
-    EMAIL_ME = os.getenv("EMAIL_ME")
-    EMAIL_YOU = os.getenv("EMAIL_YOU")
-    EMAIL_PWD = os.getenv("EMAIL_PWD")
+    # This method of reading enviroment variables only works when deployed on AWS, not locally
+    EMAIL_ME = os.environ.get('EMAIL_ME')
+    EMAIL_YOU = os.environ.get('EMAIL_YOU')
+    EMAIL_PWD = os.environ.get('EMAIL_PWD')
 
     # Scrape the list of Gainers from Yahoo
     # Use head(10) to reduce list to Top-10
@@ -41,9 +43,11 @@ def cloudtest ():
     mail.sendmail(EMAIL_ME,EMAIL_YOU,msg.as_string())
     mail.quit()
 
-def main():
-    cloudtest()
+    return text
 
-if __name__ == "__main__":
-    main()
-    
+def lambda_handler(event, context):
+    text = cloudtest()
+    return {
+            "statusCode": 200,
+            "body": text
+            }
